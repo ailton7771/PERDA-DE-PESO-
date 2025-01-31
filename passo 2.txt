@@ -1,0 +1,25 @@
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
+export default function Checkout() {
+  return (
+    <PayPalScriptProvider options={{ "client-id": "YOUR_PAYPAL_CLIENT_ID" }}>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+          <h2 className="text-2xl font-bold mb-4">Assinatura Premium</h2>
+          <p className="text-gray-600 mb-4">Acesse conteúdos exclusivos com nossa assinatura.</p>
+          <PayPalButtons
+            createSubscription={(data, actions) => {
+              return actions.subscription.create({
+                plan_id: "YOUR_PAYPAL_PLAN_ID",
+              });
+            }}
+            onApprove={(data, actions) => {
+              alert("Assinatura confirmada: " + data.subscriptionID);
+              // Aqui você pode salvar a assinatura no banco de dados
+            }}
+          />
+        </div>
+      </div>
+    </PayPalScriptProvider>
+  );
+}
